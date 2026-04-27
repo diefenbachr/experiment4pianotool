@@ -228,7 +228,7 @@ let nextId = 1
 
 export default function App() {
   const [dark, setDark] = useState(
-    () => window.matchMedia('(prefers-color-scheme: dark)').matches
+    () => window.matchMedia?.('(prefers-color-scheme: dark)')?.matches ?? false
   )
   const [root, setRoot] = useState('C')
   const [quality, setQuality] = useState('Major')
