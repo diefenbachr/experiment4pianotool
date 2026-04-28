@@ -51,8 +51,8 @@ function chordLabel(root, quality) {
 
 // ─── Piano keyboard ───────────────────────────────────────────────────────────
 
-const WHITE_KEY_NOTE_INDICES = [0, 2, 4, 5, 7, 9, 11]
-const BLACK_KEYS = [
+const WHITE_KEY_PATTERN = [0, 2, 4, 5, 7, 9, 11]
+const BLACK_KEY_PATTERN = [
   { noteIndex: 1,  afterWhite: 0 },
   { noteIndex: 3,  afterWhite: 1 },
   { noteIndex: 6,  afterWhite: 3 },
@@ -60,12 +60,26 @@ const BLACK_KEYS = [
   { noteIndex: 10, afterWhite: 5 },
 ]
 
+function buildKeyArrays(octaves) {
+  const white = []
+  const black = []
+  for (let oct = 0; oct < octaves; oct++) {
+    WHITE_KEY_PATTERN.forEach(ni => white.push(ni))
+    BLACK_KEY_PATTERN.forEach(({ noteIndex, afterWhite }) =>
+      black.push({ noteIndex, afterWhite: afterWhite + oct * 7 })
+    )
+  }
+  return { white, black }
+}
+
 function PianoKeyboard({ activeTones, mini = false }) {
+  const octaves = mini ? 1 : 2
   const wW = mini ? 20 : 44
   const wH = mini ? 56 : 124
   const bW = mini ? 13 : 28
   const bH = mini ? 34 : 76
-  const totalW = WHITE_KEY_NOTE_INDICES.length * wW
+  const { white: whiteKeys, black: blackKeys } = buildKeyArrays(octaves)
+  const totalW = whiteKeys.length * wW
 
   return (
     <svg
@@ -75,11 +89,11 @@ function PianoKeyboard({ activeTones, mini = false }) {
       style={{ display: 'block' }}
       aria-label="Piano keyboard"
     >
-      {WHITE_KEY_NOTE_INDICES.map((noteIndex, i) => {
+      {whiteKeys.map((noteIndex, i) => {
         const active = activeTones.includes(noteIndex)
         const x = i * wW
         return (
-          <g key={noteIndex}>
+          <g key={i}>
             <rect
               x={x + 0.5}
               y={0}
@@ -112,11 +126,11 @@ function PianoKeyboard({ activeTones, mini = false }) {
         )
       })}
 
-      {BLACK_KEYS.map(({ noteIndex, afterWhite }) => {
+      {blackKeys.map(({ noteIndex, afterWhite }, i) => {
         const active = activeTones.includes(noteIndex)
         const x = (afterWhite + 1) * wW - bW / 2
         return (
-          <g key={noteIndex}>
+          <g key={i}>
             <rect
               x={x}
               y={0}
