@@ -73,7 +73,7 @@ function buildKeyArrays(octaves) {
 }
 
 function PianoKeyboard({ activeTones, mini = false }) {
-  const octaves = mini ? 1 : 2
+  const octaves = 2
   const wW = mini ? 20 : 44
   const wH = mini ? 56 : 124
   const bW = mini ? 13 : 28
