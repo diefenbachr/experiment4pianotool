@@ -64,9 +64,9 @@ function buildKeyArrays(octaves) {
   const white = []
   const black = []
   for (let oct = 0; oct < octaves; oct++) {
-    WHITE_KEY_PATTERN.forEach(ni => white.push(ni))
+    WHITE_KEY_PATTERN.forEach(ni => white.push({ noteIndex: ni, octave: oct }))
     BLACK_KEY_PATTERN.forEach(({ noteIndex, afterWhite }) =>
-      black.push({ noteIndex, afterWhite: afterWhite + oct * 7 })
+      black.push({ noteIndex, afterWhite: afterWhite + oct * 7, octave: oct })
     )
   }
   return { white, black }
@@ -89,8 +89,8 @@ function PianoKeyboard({ activeTones, mini = false }) {
       style={{ display: 'block' }}
       aria-label="Piano keyboard"
     >
-      {whiteKeys.map((noteIndex, i) => {
-        const active = activeTones.includes(noteIndex)
+      {whiteKeys.map(({ noteIndex, octave }, i) => {
+        const active = octave === 0 && activeTones.includes(noteIndex)
         const x = i * wW
         return (
           <g key={i}>
@@ -126,8 +126,8 @@ function PianoKeyboard({ activeTones, mini = false }) {
         )
       })}
 
-      {blackKeys.map(({ noteIndex, afterWhite }, i) => {
-        const active = activeTones.includes(noteIndex)
+      {blackKeys.map(({ noteIndex, afterWhite, octave }, i) => {
+        const active = octave === 0 && activeTones.includes(noteIndex)
         const x = (afterWhite + 1) * wW - bW / 2
         return (
           <g key={i}>
