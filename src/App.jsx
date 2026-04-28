@@ -42,7 +42,7 @@ const QUALITY_LABELS = {
 }
 
 function getChordTones(rootIndex, quality) {
-  return (CHORD_INTERVALS[quality] ?? []).map(i => (rootIndex + i) % 12)
+  return (CHORD_INTERVALS[quality] ?? []).map(i => rootIndex + i)
 }
 
 function chordLabel(root, quality) {
@@ -90,7 +90,7 @@ function PianoKeyboard({ activeTones, mini = false }) {
       aria-label="Piano keyboard"
     >
       {whiteKeys.map(({ noteIndex, octave }, i) => {
-        const active = octave === 0 && activeTones.includes(noteIndex)
+        const active = activeTones.includes(noteIndex + octave * 12)
         const x = i * wW
         return (
           <g key={i}>
@@ -127,7 +127,7 @@ function PianoKeyboard({ activeTones, mini = false }) {
       })}
 
       {blackKeys.map(({ noteIndex, afterWhite, octave }, i) => {
-        const active = octave === 0 && activeTones.includes(noteIndex)
+        const active = activeTones.includes(noteIndex + octave * 12)
         const x = (afterWhite + 1) * wW - bW / 2
         return (
           <g key={i}>
@@ -332,7 +332,7 @@ export default function App() {
                 {chordLabel(root, quality)}
               </span>
               <span className="text-sm text-muted-foreground">
-                {activeTones.map(i => NOTE_NAMES[i]).join(' · ')}
+                {activeTones.map(i => NOTE_NAMES[i % 12]).join(' · ')}
               </span>
             </div>
             <div className="inline-block rounded-xl border border-border bg-card p-6 shadow-sm overflow-x-auto">
