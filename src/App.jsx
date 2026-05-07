@@ -371,6 +371,25 @@ export default function App() {
           </section>
         )}
       </main>
+
+      <footer className="border-t border-border mt-16">
+        <div className="max-w-4xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p className="text-xs text-muted-foreground">
+            A simple chord reference tool · root position, no audio
+          </p>
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()}{' '}
+            <a
+              href="https://github.com/diefenbachr/experiment4pianotool"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground transition-colors underline underline-offset-2"
+            >
+              Ryan Diefenbach
+            </a>
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }
