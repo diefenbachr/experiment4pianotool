@@ -278,7 +278,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       {/* Header */}
       <header className="border-b border-border">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -300,7 +300,7 @@ export default function App() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-10 space-y-12">
+      <main className="max-w-4xl mx-auto px-6 py-10 space-y-12 flex-1 w-full">
         {/* Chord selector section */}
         <section className="space-y-7">
           <div className="flex flex-wrap items-end gap-3">
