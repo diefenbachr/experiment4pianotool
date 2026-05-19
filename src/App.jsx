@@ -83,10 +83,11 @@ function PianoKeyboard({ activeTones, mini = false }) {
 
   return (
     <svg
-      width={totalW}
-      height={wH}
       viewBox={`0 0 ${totalW} ${wH}`}
-      style={{ display: 'block' }}
+      style={mini
+        ? { display: 'block', width: totalW, height: wH }
+        : { display: 'block', width: '100%', height: 'auto' }
+      }
       aria-label="Piano keyboard"
     >
       {whiteKeys.map(({ noteIndex, octave }, i) => {
@@ -215,7 +216,7 @@ function ChordCard({ chord, onRemove }) {
 
 function LabeledSelect({ label, value, onChange, options }) {
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className="flex flex-col gap-1.5 flex-1 min-w-[110px]">
       <label className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest">
         {label}
       </label>
@@ -278,10 +279,10 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-dvh bg-background text-foreground flex flex-col">
       {/* Header */}
       <header className="border-b border-border">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-sm font-semibold tracking-tight text-foreground m-0">
               Piano Chord Visualizer
@@ -300,9 +301,9 @@ export default function App() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-10 space-y-12 flex-1 w-full">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-10 sm:space-y-12 flex-1 w-full">
         {/* Chord selector section */}
-        <section className="space-y-7">
+        <section className="space-y-6 sm:space-y-7">
           <div className="flex flex-wrap items-end gap-3">
             <LabeledSelect
               label="Root note"
@@ -318,7 +319,7 @@ export default function App() {
             />
             <button
               onClick={addChord}
-              className="h-9 self-end inline-flex items-center gap-1.5 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm hover:opacity-90 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-ring"
+              className="h-9 self-end w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm hover:opacity-90 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-ring"
             >
               <Plus size={14} />
               Add chord
@@ -335,7 +336,7 @@ export default function App() {
                 {activeTones.map(i => NOTE_NAMES[i % 12]).join(' · ')}
               </span>
             </div>
-            <div className="inline-block rounded-xl border border-border bg-card p-6 shadow-sm overflow-x-auto">
+            <div className="rounded-xl border border-border bg-card p-4 sm:p-6 shadow-sm">
               <PianoKeyboard activeTones={activeTones} />
             </div>
           </div>
@@ -372,8 +373,8 @@ export default function App() {
         )}
       </main>
 
-      <footer className="border-t border-border mt-16">
-        <div className="max-w-4xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <footer className="border-t border-border">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-5 sm:py-6 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-xs text-muted-foreground">
             A simple chord reference tool · root position, no audio
           </p>
