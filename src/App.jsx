@@ -376,7 +376,7 @@ export default function App() {
       <footer className="border-t border-border">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-5 sm:py-6 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-xs text-muted-foreground">
-            A simple chord reference tool · root position, no audio
+            A free chord reference tool
           </p>
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()}{' '}
